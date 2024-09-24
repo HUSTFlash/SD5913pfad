@@ -13,7 +13,11 @@ import numpy as np
 # load the environment variables
 dotenv.load_dotenv()
 
-filename = os.getenv('FILENAME', "./assignment/output/UK_Historic_Station_Data.html")
+output_path = "./assignment/output/UK_Historic_Station_Data.html"
+if os.path.exists(output_path):
+    filename = output_path
+else:
+    filename = "UK_Historic_Station_Data.html"
 climate_datas = defaultdict(dict)
 
 # check if the page exists
@@ -108,6 +112,7 @@ for row in rows:
     print(f'Row {row_num}: {row_string}')
     
 #show data picture
+plt.figure(figsize=(25.6,9.6))
 for key in climate_datas:
     station_name = key
     station_data_year = list(climate_datas[key].keys())
@@ -133,5 +138,9 @@ for key in climate_datas:
     plt.xlabel('Year')
     plt.ylabel('Temperature/℃')
 plt.legend()
-plt.savefig('./assignment/output/data.png')
+png_path = "./assignment/output/data.png"
+if os.path.exists(png_path):
+    plt.savefig(png_path)
+else:
+    plt.savefig("data.png")
 plt.show()
